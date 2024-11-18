@@ -1,3 +1,5 @@
+#require slow
+
 Garbage collection
 ==================
 
