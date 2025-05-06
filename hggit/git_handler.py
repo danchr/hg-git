@@ -1756,7 +1756,11 @@ class GitHandler(object):
             self.ui, self.repo
         ).items():
             tag = tag.replace(b' ', b'_')
-            target = self.map_git_get(hex(sha))
+            hgsha = hex(sha)
+            if hgsha == nullid:
+                continue
+
+            target = self.map_git_get(hgsha)
 
             if target is None:
                 self.repo.ui.warn(
