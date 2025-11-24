@@ -3,6 +3,7 @@ import itertools
 import os
 import re
 import shutil
+import types
 
 from dulwich.client import HTTPUnauthorized
 from dulwich.errors import HangupException, GitProtocolError, ApplyDeltaError
@@ -2395,6 +2396,11 @@ class GitHandler(object):
                 urlobj.host,
                 urlobj.user,
             )
+
+            # fix for dulwich >= 0.24.3 compatibility
+            # see: https://foss.heptapod.net/mercurial/hg-git/-/merge_requests/260#note_493621
+            if isinstance(auth, types.GeneratorType):
+                auth = next(auth, None)
 
             if self._http_auth_realm:
                 # since we've tried an unauthenticated request, and
