@@ -16,7 +16,13 @@ stages:
     CI_TEST_GIT_NETWORKING: 1
   script:
     - adduser -D test
-    - chown -R test *
+    # In the following chown command, let's use "." and not "*", because we want
+    # to change ownership also on the ".hg" directory and the other hidden
+    # files.
+    #
+    # Otherwise the pipeline would fail with:
+    #     "abort: Permission denied: '/builds/mercurial/hg-git/.hg/dirstate'"
+    - chown -R test .
     - su test -c contrib/ci.sh
     - mv tests/.coverage coverage-$CI_JOB_ID
   artifacts: &test-artifacts
@@ -86,7 +92,13 @@ Alpine:
         pip install --break-system-packages dulwich==$DULWICH
       fi
     - adduser -D test
-    - chown -R test *
+    # In the following chown command, let's use "." and not "*", because we want
+    # to change ownership also on the ".hg" directory and the other hidden
+    # files.
+    #
+    # Otherwise the pipeline would fail with:
+    #     "abort: Permission denied: '/builds/mercurial/hg-git/.hg/dirstate'"
+    - chown -R test .
     - SETUPTOOLS_SCM_PRETEND_VERSION=1 PYTHON=3 su test -c contrib/ci.sh
     - mv tests/.coverage coverage-$CI_JOB_ID
   artifacts: *test-artifacts
