@@ -2131,8 +2131,12 @@ class GitHandler(object):
         )
 
         for change in changes:
-            oldfile, oldmode, oldsha = change.old
-            newfile, newmode, newsha = change.new
+            oldfile, oldmode, oldsha = (None, None, None)
+            newfile, newmode, newsha = (None, None, None)
+            if change.old:
+                oldfile, oldmode, oldsha = change.old
+            if change.new:
+                newfile, newmode, newsha = change.new
             # actions are described by the following table ('no' means 'does
             # not exist'):
             #    old        new     |    action
