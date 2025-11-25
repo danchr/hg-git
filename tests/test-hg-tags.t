@@ -82,3 +82,17 @@ git should have the tag alpha
 the tag should be in .hgtags
   $ cat hgrepo2/.hgtags
   ff7a2f2d8d7099694ae1e8b03838d40575bebb63 alpha
+
+try deleting a tag -- git tags aren't supposed to be modified, so we
+don't push the change, but at least we keep mum about it
+
+  $ cd hgrepo2
+  $ hg tag --remove alpha
+  $ hg push
+  pushing to $TESTTMP/repo.git
+  searching for changes
+  adding objects
+  remote: found 0 deltas to reuse
+  added 1 commits with 1 trees and 1 blobs
+  updating reference refs/heads/master
+  $ cd ..

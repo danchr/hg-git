@@ -1764,7 +1764,7 @@ class GitHandler(object):
         ).items():
             tag = tag.replace(b' ', b'_')
             hgsha = hex(sha)
-            if hgsha == nullid:
+            if hgsha == nullhex:
                 continue
 
             target = self.map_git_get(hgsha)
