@@ -44,10 +44,10 @@ Latest:
     matrix:
       - &latest-versions
         PYTHON:
-          - "3.9"
-          - "3.13"
+          - "3.10"
+          - "3.14"
         HG:
-          - "6.9"
+          - "7.1"
 
 # This is the authoritative list of versions of Mercurial that this
 # extension is supported and tested with; it should be kept in sync
@@ -62,11 +62,13 @@ Supported:
   parallel:
     matrix:
       - &supported-versions
-        PYTHON: "3.9"
+        PYTHON: "3.10"
         HG:
           - "6.6"
           - "6.7"
           - "6.8"
+          - "6.9"
+          - "7.0"
 
 # Test that it is possible to use and run hg-git on versions of Alpine
 # that include Dulwich, and with the oldest Dulwich supported.
@@ -104,9 +106,8 @@ Alpine:
     matrix:
       - ALPINE: "3.19"
         DULWICH:
-          - "0.21.6"
-      - ALPINE:
-        - "3.19"
+          - "0.22.1"
+          - "0.24.9"
 
 # Test that the tests pass against the current branches
 Development:
@@ -132,7 +133,7 @@ Development:
     matrix:
       - &development-versions
         PYTHON:
-          - "3.13"
+          - "3.14"
         HG:
           - "stable"
           - "default"
