@@ -2392,9 +2392,9 @@ class GitHandler(object):
             str_uri = uri.decode('utf-8')
             urlobj = urlutil.url(uri)
             auth = client.get_credentials_from_store(
-                urlobj.scheme,
-                urlobj.host,
-                urlobj.user,
+                urlobj.scheme.decode('utf-8'),
+                urlobj.host.decode('utf-8'),
+                urlobj.user and urlobj.user.decode('utf-8'),
             )
 
             # fix for dulwich >= 0.24.3 compatibility

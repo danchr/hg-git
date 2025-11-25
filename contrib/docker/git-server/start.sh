@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# create an empty repository
+rm -rf /srv/repo.git
+git init --bare --shared /srv/repo.git
+chown -R git /srv/repo.git
+
 # for each daemon, we take care to ensure that all logging happens to
 # stdout & stderr
 
@@ -11,7 +16,7 @@
     /usr/bin/fcgiwrap &
 
 # start the simple daemon
-git daemon \
+HOME=/home/git git daemon \
     --export-all \
     --user=git \
     --base-path=/srv \

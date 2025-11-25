@@ -1,3 +1,12 @@
+# To run this test locally, install Docker Compose and run from the
+# project root:
+#
+# docker compose --project-directory contrib/docker/git-server up
+#
+# To re-run the test, interrupt it, and run it once more.
+#
+
+
 Load commonly used test logic
   $ . "$TESTDIR/testutil"
 
@@ -61,7 +70,7 @@ Clone using the git protocol:
 ..and finally SSH:
 
   $ hg clone git@git-server:/srv/repo.git repo-ssh
-  Warning: Permanently added * (glob)
+  Warning: Permanently added * (glob) (?)
   updating to branch default
   0 files updated, 0 files merged, 0 files removed, 0 files unresolved
 
@@ -95,7 +104,7 @@ And finally, pull the new commit:
 
   $ hg -R repo-git pull -u
   pulling from git://git-server/repo.git
-  remote: warning: unable to access '/root/.config/git/attributes': Permission denied
+  remote: warning: unable to access '/root/.config/git/attributes': Permission denied (?)
   importing 1 git commits
   adding bookmark master
   new changesets fa22339f4ab8
@@ -116,7 +125,7 @@ But we can specify authentication in the configuration:
   >    --config auth.git.password=git \
   >    pull -u
   pulling from http://git-server/repo.git
-  remote: warning: unable to access '/root/.config/git/attributes': Permission denied
+  remote: warning: unable to access '/root/.config/git/attributes': Permission denied (?)
   importing 1 git commits
   adding bookmark master
   new changesets fa22339f4ab8
@@ -124,10 +133,7 @@ But we can specify authentication in the configuration:
 
 Try using git credentials:
 
-NB: the use of printf is deliberate; otherwise the test fails due to
-dulwich considering the newline part of the url
-
-  $ printf http://git:git@git-server > $TESTTMP/.git-credentials
+  $ echo http://git:git@git-server > $TESTTMP/.git-credentials
   $ hg -R repo-http pull
   pulling from http://git-server/repo.git
   no changes found

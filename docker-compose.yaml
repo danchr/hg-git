@@ -1,0 +1,33 @@
+#
+# Allow running tests that rely on the network locally
+#
+# Every time you do `docker-compose up` it runs the test.
+#
+
+services:
+  git-server:
+    container_name: git-server
+    build: contrib/docker/git-server
+    ports:
+      - 22 # Example: expose SSH if your git server uses it
+      - 8080
+      - 9418
+
+  hg-git:
+    build:
+      dockerfile: contrib/docker/Dockerfile.alpine
+      args:
+        # Edit these to change the versions to test
+        HG: 7.1
+        PYTHON: 3.14
+    container_name: hg-git-tests
+    volumes:
+      - .:/src
+    environment:
+      SETUPTOOLS_SCM_PRETEND_VERSION: 0.0.1
+      CI_TEST_GIT_NETWORKING: 1
+    working_dir: /src/tests
+    tty: true
+    command:
+      - ./run-tests.py
+      - test-serve-ci.t

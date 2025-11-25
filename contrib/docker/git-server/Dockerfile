@@ -40,10 +40,6 @@ RUN mkdir /run/nginx
 COPY htpasswd /git-server/htpasswd
 COPY nginx.conf /git-server/nginx.conf
 
-# create an empty repository
-RUN git init --bare --shared /srv/repo.git
-RUN chown -R git /srv/repo.git
-
 EXPOSE 22
 EXPOSE 80
 EXPOSE 9418
