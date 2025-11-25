@@ -20,8 +20,10 @@ def generate_ssh_vendor(ui):
         def run_command(
             self, host, command, username=None, port=None, **kwargs
         ):
-            assert isinstance(command, str)
-            command = command.encode(SSHGitClient.DEFAULT_ENCODING)
+            # on dulwich >= 0.24, command is bytes already
+            # on dulwich <= 0.23, command is a string
+            if isinstance(command, str):
+                command = command.encode(SSHGitClient.DEFAULT_ENCODING)
             sshcmd = ui.config(b"ui", b"ssh", b"ssh")
             args = procutil.sshargs(
                 sshcmd, pycompat.bytesurl(host), username, port
