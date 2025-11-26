@@ -1622,7 +1622,13 @@ class GitHandler(object):
         haveheads.extend(self.git.refs.as_dict(LOCAL_BRANCH_PREFIX).values())
         graphwalker = self.git.get_graph_walker(heads=haveheads)
 
-        def determine_wants(refs):
+        # Starting with dulwich 0.24.3, determine_wants() needs to accept an
+        # additional parameter "depth".
+        #
+        # Compare the following:
+        # - 0.24.2 (without "depth"): https://github.com/jelmer/dulwich/blob/dulwich-0.24.2/dulwich/repo.py#L590
+        # - 0.24.3 (with "depth")   : https://github.com/jelmer/dulwich/blob/dulwich-0.24.3/dulwich/repo.py#L601
+        def determine_wants(refs, depth: int | None = None):
             if refs is None:
                 return None
             filteredrefs = git2hg.filter_refs(refs, heads)
