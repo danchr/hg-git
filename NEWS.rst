@@ -1,4 +1,4 @@
-hg-git 1.3.0 (unreleased)
+hg-git 1.3.0 (2025-12-02)
 =========================
 
 This is a feature release, although without the actual features.
